@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CalendarMngt.Entidades.EClinica;
 using CalendarMngt.Entidades.EDoctor;
+using CalendarMngt.Entidades.EEspecialidad;
 using CalendarMngt.Entidades.ETitulo;
 using CalendarMngt.Repositorio.Persistencia;
 using System;
@@ -23,6 +24,9 @@ namespace CalendarMngt.Configuracion
 
             CreateMap<EInTitulo, Titulo>().ReverseMap();
             CreateMap<Titulo, EOutTitulo>().ReverseMap();
+
+            CreateMap<EInEspecialidad, Especialidad>().ReverseMap();
+            CreateMap<Especialidad, EOutEspecialidad>().ReverseMap();
 
         }
     }

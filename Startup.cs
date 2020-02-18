@@ -39,6 +39,8 @@ namespace CalendarMngt
             services.AddTransient<IRepositorioClinica, RepositorioClinica>();
             services.AddTransient<IRepositorioAuth, RepositorioAuth>();
             services.AddTransient<IRepositorioDoctor, RepositorioDoctor>();
+            services.AddTransient<IRepositorioTitulo, RepositorioTitulo>();
+            services.AddTransient<IRepositorioEspecialidad, RepositorioEspecialidad>();
 
             services.AddAutoMapper(typeof(Startup));
 

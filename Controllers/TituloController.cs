@@ -30,8 +30,10 @@ namespace CalendarMngt.Controllers
         [Route("ConsultarTitulo")]
         public ERespuestaTitulo Consultar()
         {
-            ERespuestaTitulo result = new ERespuestaTitulo();
-            result.Titulos = repositorioTitulo.Consultar();
+            ERespuestaTitulo result = new ERespuestaTitulo()
+            {
+                Titulos = repositorioTitulo.Consultar(),
+            };
 
             return ValidarRespuesta(result);
         }

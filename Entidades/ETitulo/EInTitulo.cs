@@ -9,7 +9,7 @@ namespace CalendarMngt.Entidades.ETitulo
     public class EInTitulo
     {
         public long Id { get; set; }
-        public string Titulo { get; set; }
+        public string Titulo1 { get; set; }
         public bool Estado { get; set; }
 
         public virtual ICollection<DoctorTitulo> DoctorTitulo { get; set; }
