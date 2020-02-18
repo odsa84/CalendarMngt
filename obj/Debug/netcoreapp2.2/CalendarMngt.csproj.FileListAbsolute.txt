@@ -1,0 +1,16 @@
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp2.2\appsettings.Development.json
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp2.2\appsettings.json
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp2.2\CalendarMngt.deps.json
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp2.2\CalendarMngt.runtimeconfig.json
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp2.2\CalendarMngt.runtimeconfig.dev.json
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp2.2\CalendarMngt.dll
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp2.2\CalendarMngt.RazorAssemblyInfo.cache
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp2.2\CalendarMngt.RazorAssemblyInfo.cs
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp2.2\CalendarMngt.AssemblyInfoInputs.cache
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp2.2\CalendarMngt.AssemblyInfo.cs
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp2.2\CalendarMngt.RazorTargetAssemblyInfo.cache
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp2.2\CalendarMngt.pdb
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp2.2\CalendarMngt.dll
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp2.2\CalendarMngt.pdb
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp2.2\CalendarMngt.csprojAssemblyReference.cache
