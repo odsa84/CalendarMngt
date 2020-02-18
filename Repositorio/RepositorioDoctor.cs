@@ -44,10 +44,7 @@ namespace CalendarMngt.Repositorio
         public EOutDoctor ConsultarPorId(long id)
         {
             var resultAux = operacionesdb.OpeConsultarPorId(id);
-            EOutDoctor result = null;
-
-            if (resultAux != null)
-                result = _mapper.Map<EOutDoctor>(resultAux);
+            EOutDoctor result = resultAux != null ? _mapper.Map<EOutDoctor>(resultAux) : null;
 
             return result;
         }        

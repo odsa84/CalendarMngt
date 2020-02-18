@@ -7,8 +7,8 @@ namespace CalendarMngt.Entidades
     {
         public ERespuestaDoctor()
         {
-            this.Error = new EError();
-            this.Doctores = new List<EOutDoctor>();
+            Error = new EError();
+            Doctores = new List<EOutDoctor>();
         }
         public List<EOutDoctor> Doctores { get; set; }
         public EError Error { get; set; }
