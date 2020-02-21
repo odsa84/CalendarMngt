@@ -38,7 +38,9 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             List<Clinica> Lst;
             using (var clinica = new cita_doctorContext())
             {
-                var clinicaLst = (from cli in clinica.Clinica select cli);
+                var clinicaLst = (from cli in clinica.Clinica
+                                  .Where(c => (c.Estado == true))
+                                  select cli);
 
                 Lst = clinicaLst.ToList();
 
@@ -57,7 +59,7 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             using (var clinica = new cita_doctorContext())
             {
                 var clinicaLst = (from cli in clinica.Clinica
-                                  .Where(cli => (cli.IdUsuario == idUsuario))
+                                  .Where(cli => (cli.IdUsuario == idUsuario) && (cli.Estado == true))
                                   select cli);
 
                 Lst = clinicaLst.ToList();
@@ -76,7 +78,7 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             using (var clinica = new cita_doctorContext())
             {
                 var clinicaLst = (from cli in clinica.Clinica
-                                  .Where(cli => (cli.Id == id))
+                                  .Where(cli => (cli.Id == id) && (cli.Estado == true))
                                   select cli);
 
                 if (clinicaLst.ToList().Count() == 0)

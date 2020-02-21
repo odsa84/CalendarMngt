@@ -14,5 +14,7 @@ namespace CalendarMngt.Interfaces
         List<EOutDoctor> Consultar();
 
         EOutDoctor ConsultarPorId(long id);
+
+        List<EOutDoctor> ConsultarPorClinica(long idClinica);
     }
 }

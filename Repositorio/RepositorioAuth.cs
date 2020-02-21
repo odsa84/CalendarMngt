@@ -23,7 +23,7 @@ namespace CalendarMngt.Repositorio
                 string pass = Hash.Crear(model.Password, "jor290714luc300617");
 
                 var user = (from us in context.Users
-                    .Where(us => (us.UserName.Equals(model.Username) && us.PasswordHash.Equals(pass)))
+                    .Where(us => (us.Email.Equals(model.Username) && us.PasswordHash.Equals(pass)))
                             select us);
 
                 if (user.ToList().Count == 0)

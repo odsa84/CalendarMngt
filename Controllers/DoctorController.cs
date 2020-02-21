@@ -62,6 +62,17 @@ namespace CalendarMngt.Controllers
             return ValidarRespuesta(result);
         }
 
+        [HttpGet("Clinica/{cli}")]
+        public ERespuestaDoctor ConsultarPorClinica(long cli)
+        {
+            ERespuestaDoctor result = new ERespuestaDoctor()
+            {
+                Doctores = repositorioDoctor.ConsultarPorClinica(cli),
+            };
+
+            return ValidarRespuesta(result);
+        }
+
         private ERespuestaDoctor ValidarRespuesta(ERespuestaDoctor result)
         {
             if (result.Doctores.Count == 0)

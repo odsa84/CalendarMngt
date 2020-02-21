@@ -34,19 +34,19 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
 
         internal List<Doctor> OpeConsultar()
         {
-            List<Doctor> lst;
             using(var doc = new cita_doctorContext())
             {
-                var aux = (from doctor in doc.Doctor select doctor);
-                lst = aux.ToList();
+                var doctorLst = (from doctor in doc.Doctor
+                           .Where(d => (d.Estado == true))
+                           select doctor).ToList();
 
-                if(lst.Count == 0)
+                if(doctorLst.Count == 0)
                 {
                     return new List<Doctor>();
                 }
-            }
 
-            return lst;
+                return doctorLst;
+            }
         }
 
         internal Doctor OpeConsultarPorId(long id)
@@ -54,14 +54,34 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             using(var doc = new cita_doctorContext())
             {
                 var doctorLst = (from doctor in doc.Doctor
-                                  .Where(doctor => (doctor.Id == id))
-                                  select doctor);
-                if(doctorLst.ToList().Count == 0)
+                                  .Where(d => (d.Id == id) && d.Estado == true)
+                                  select doctor).ToList();
+
+                if(doctorLst.Count == 0)
                 {
                     return null;
                 }
 
-                return doctorLst.ToList()[0];
+                return doctorLst[0];
+            }
+        }
+
+        internal List<Doctor> OpeConsultarPorClinica(long id)
+        {
+            using (var doc = new cita_doctorContext())
+            {
+                var doctorLst = (from cd in doc.ClinicaDoctor
+                                 join d in doc.Doctor on cd.IdDoctor equals d.Id
+                                 where cd.IdClinicaNavigation.Id == id && cd.IdClinicaNavigation.Estado == true
+                                 && d.Estado == true
+                                 select d).ToList();
+                
+                if (doctorLst.Count() == 0)
+                {
+                    return new List<Doctor>();
+                }
+
+                return doctorLst;
             }
         }
     }

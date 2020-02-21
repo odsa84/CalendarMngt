@@ -47,6 +47,18 @@ namespace CalendarMngt.Repositorio
             EOutDoctor result = resultAux != null ? _mapper.Map<EOutDoctor>(resultAux) : null;
 
             return result;
-        }        
+        }  
+        
+        public List<EOutDoctor> ConsultarPorClinica(long idClinica)
+        {
+            var resultAux = operacionesdb.OpeConsultarPorClinica(idClinica);
+            List<EOutDoctor> result = new List<EOutDoctor>();
+            foreach (Doctor doc in resultAux)
+            {
+                result.Add(_mapper.Map<EOutDoctor>(doc));
+            }
+
+            return result;
+        }
     }
 }
