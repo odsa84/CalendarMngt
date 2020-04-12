@@ -1,4 +1,5 @@
-﻿using CalendarMngt.Entidades.EDoctor;
+﻿using CalendarMngt.Entidades.EClinicaDoctor;
+using CalendarMngt.Entidades.EDoctor;
 using System.Collections.Generic;
 
 namespace CalendarMngt.Entidades

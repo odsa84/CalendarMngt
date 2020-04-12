@@ -1,7 +1,13 @@
 ﻿using AutoMapper;
+using CalendarMngt.Entidades.ECalendario;
+using CalendarMngt.Entidades.ECiudad;
+using CalendarMngt.Entidades.ECliente;
 using CalendarMngt.Entidades.EClinica;
+using CalendarMngt.Entidades.EClinicaDoctor;
 using CalendarMngt.Entidades.EDoctor;
 using CalendarMngt.Entidades.EEspecialidad;
+using CalendarMngt.Entidades.EEstado;
+using CalendarMngt.Entidades.EProvincia;
 using CalendarMngt.Entidades.ETitulo;
 using CalendarMngt.Repositorio.Persistencia;
 using System;
@@ -28,6 +34,22 @@ namespace CalendarMngt.Configuracion
             CreateMap<EInEspecialidad, Especialidad>().ReverseMap();
             CreateMap<Especialidad, EOutEspecialidad>().ReverseMap();
 
+            CreateMap<EInCliente, Cliente>().ReverseMap();
+            CreateMap<Cliente, EOutCliente>().ReverseMap();
+
+            CreateMap<EInCalendario, Calendario>().ReverseMap();
+            CreateMap<Calendario, EOutCalendario>().ReverseMap();
+
+            CreateMap<EInEstado, Estado>().ReverseMap();
+            CreateMap<Estado, EOutEstado>().ReverseMap();
+
+            CreateMap<EInProvincia, Provincia>().ReverseMap();
+            CreateMap<Provincia, EOutProvincia>().ReverseMap();
+
+            CreateMap<EInCiudad, Ciudad>().ReverseMap();
+            CreateMap<Ciudad, EOutCiudad>().ReverseMap();
+
+            CreateMap<ClinicaDoctor, EOutClinicaDoctor>().ReverseMap();
         }
     }
 }

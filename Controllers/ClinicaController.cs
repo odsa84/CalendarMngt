@@ -46,6 +46,16 @@ namespace CalendarMngt.Controllers
         }
 
         [HttpPost]
+        [Route("ActualizarClinica")]
+        public ERespuesta Actualizar(EInClinica entrada)
+        {
+            ERespuesta respuesta = repositorioClinica.Actualizar(entrada);
+
+            return respuesta;
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
         [Route("ConsultarClinica")]
         public ERespuesta Consultar()
         {
@@ -76,6 +86,17 @@ namespace CalendarMngt.Controllers
             return ValidarRespuesta(result);
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("PorCiudadEsp")]
+        public ERespuesta ConsultaAvanzada(EBodyConsultarPorCiudadEsp entrada)
+        {
+            ERespuesta result = new ERespuesta();
+            result.Clinicas = repositorioClinica.ConsultaAvanzada(entrada.IdCiudad, entrada.IdEspecialidad);
+
+            return ValidarRespuesta(result);
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
@@ -92,7 +113,7 @@ namespace CalendarMngt.Controllers
         {
             if (result.Clinicas.Count == 0)
             {
-                result.Error.Codigo = "00";
+                result.Error.Codigo = "01";
                 result.Error.Mensaje = "No se encontraron datos en la base";
             }
             else

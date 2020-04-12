@@ -27,6 +27,7 @@ namespace CalendarMngt.Controllers
             return Ok(new EInEspecialidad());
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("ConsultarEspecialidad")]
         public ERespuestaEspecialidad Consultar()
@@ -48,6 +49,7 @@ namespace CalendarMngt.Controllers
             return respuesta;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ERespuestaEspecialidad ConsultarPorId(long id)
         {
@@ -63,7 +65,7 @@ namespace CalendarMngt.Controllers
         {
             if (result.Especialidades.Count == 0)
             {
-                result.Error.Codigo = "00";
+                result.Error.Codigo = "01";
                 result.Error.Mensaje = "No se encontraron datos en la base";
             }
             else

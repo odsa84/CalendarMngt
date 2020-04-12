@@ -1,5 +1,7 @@
 ﻿using CalendarMngt.Entidades;
+using CalendarMngt.Entidades.EClinicaDoctor;
 using CalendarMngt.Entidades.EDoctor;
+using CalendarMngt.Repositorio.Persistencia;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,13 @@ namespace CalendarMngt.Interfaces
     {
         ERespuestaDoctor Insertar(EInDoctor inDoctor);
 
-        List<EOutDoctor> Consultar();
+        List<EOutClinicaDoctor> Consultar();
 
         EOutDoctor ConsultarPorId(long id);
 
-        List<EOutDoctor> ConsultarPorClinica(long idClinica);
+        List<EOutClinicaDoctor> ConsultarPorClinica(long idClinica);
+
+        List<EOutClinicaDoctor> ConsultaAvanzada(long idCiudad, long idEsp);
+
     }
 }

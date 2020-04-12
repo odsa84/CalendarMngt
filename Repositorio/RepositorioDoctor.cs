@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CalendarMngt.Entidades;
+using CalendarMngt.Entidades.EClinicaDoctor;
 using CalendarMngt.Entidades.EDoctor;
 using CalendarMngt.Interfaces;
 using CalendarMngt.Repositorio.Persistencia;
@@ -29,13 +30,14 @@ namespace CalendarMngt.Repositorio
 
             return eRespuesta;
         }
-        public List<EOutDoctor> Consultar()
+        public List<EOutClinicaDoctor> Consultar()
         {
             var resultAux = operacionesdb.OpeConsultar();
-            List<EOutDoctor> result = new List<EOutDoctor>();
-            foreach(Doctor doc in resultAux)
+            List<EOutClinicaDoctor> result = new List<EOutClinicaDoctor>();
+            foreach(ClinicaDoctor doc in resultAux)
             {
-                result.Add(_mapper.Map<EOutDoctor>(doc));
+                doc.IdClinicaNavigation.ClinicaDoctor = null;
+                result.Add(_mapper.Map<EOutClinicaDoctor>(doc));
             }
 
             return result;
@@ -49,13 +51,37 @@ namespace CalendarMngt.Repositorio
             return result;
         }  
         
-        public List<EOutDoctor> ConsultarPorClinica(long idClinica)
+        public List<EOutClinicaDoctor> ConsultarPorClinica(long idClinica)
         {
             var resultAux = operacionesdb.OpeConsultarPorClinica(idClinica);
-            List<EOutDoctor> result = new List<EOutDoctor>();
-            foreach (Doctor doc in resultAux)
+            List<EOutClinicaDoctor> result = new List<EOutClinicaDoctor>();
+            foreach (ClinicaDoctor doc in resultAux)
             {
-                result.Add(_mapper.Map<EOutDoctor>(doc));
+                doc.IdClinicaNavigation.ClinicaDoctor = null;
+                result.Add(_mapper.Map<EOutClinicaDoctor>(doc));
+            }
+
+            return result;
+        }
+
+        public List<EOutClinicaDoctor> ConsultaAvanzada(long idCiudad, long idEsp)
+        {
+            var resultAux = operacionesdb.OpeConsultaAvanzada(idCiudad, idEsp);
+            List<EOutClinicaDoctor> result = new List<EOutClinicaDoctor>();
+            foreach (ClinicaDoctor doc in resultAux)
+            {
+                foreach (Calendario cal in doc.IdClinicaNavigation.Calendario)
+                {
+                    cal.IdClienteNavigation = null;
+                    cal.IdClinicaNavigation = null;
+                    cal.IdDoctorNavigation = null;
+                    cal.IdEstadoNavigation.Calendario = null;
+                }
+                doc.IdClinicaNavigation.ClinicaDoctor = null;
+                doc.IdDoctorNavigation.Calendario = null;
+                doc.IdDoctorNavigation.ClinicaDoctor = null;
+                doc.IdDoctorNavigation.DoctorTitulo = null;
+                result.Add(_mapper.Map<EOutClinicaDoctor>(doc));
             }
 
             return result;

@@ -41,6 +41,11 @@ namespace CalendarMngt
             services.AddTransient<IRepositorioDoctor, RepositorioDoctor>();
             services.AddTransient<IRepositorioTitulo, RepositorioTitulo>();
             services.AddTransient<IRepositorioEspecialidad, RepositorioEspecialidad>();
+            services.AddTransient<IRepositorioCliente, RepositorioCliente>();
+            services.AddTransient<IRepositorioCalendario, RepositorioCalendario>();
+            services.AddTransient<IRepositorioEstado, RepositorioEstado>();
+            services.AddTransient<IRepositorioProvincia, RepositorioProvincia>();
+            services.AddTransient<IRepositorioCiudad, RepositorioCiudad>();
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -49,7 +54,9 @@ namespace CalendarMngt
                                                                    .AllowAnyMethod()
                                                                     .AllowAnyHeader()));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             /*services.AddCors(options =>
             {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CalendarMngt.Entidades;
 using CalendarMngt.Entidades.EClinica;
+using CalendarMngt.Entidades.EClinicaDoctor;
 using CalendarMngt.Interfaces;
 using CalendarMngt.Repositorio.Persistencia;
 using CalendarMngt.Repositorio.Persistencia.Modelo;
@@ -18,7 +19,7 @@ namespace CalendarMngt.Repositorio
 
         public RepositorioClinica(IMapper _mapper)
         {
-            operacionesdb = new OperacionesClinica();
+            operacionesdb = new OperacionesClinica(_mapper);
             this._mapper = _mapper;
         }
 
@@ -26,6 +27,14 @@ namespace CalendarMngt.Repositorio
         {
             Clinica cli = _mapper.Map<Clinica>(inClinica);
             ERespuesta respuesta = operacionesdb.OpeInsertar(cli);
+
+            return respuesta;
+        }
+
+        public ERespuesta Actualizar(EInClinica inClinica)
+        {
+            Clinica cli = _mapper.Map<Clinica>(inClinica);
+            ERespuesta respuesta = operacionesdb.OpeActualizar(cli);
 
             return respuesta;
         }
@@ -63,6 +72,26 @@ namespace CalendarMngt.Repositorio
 
             if (resultAux != null)
                 result = _mapper.Map<EOutClinica>(resultAux);
+
+            return result;
+        }
+
+        public List<EOutClinica> ConsultaAvanzada(long idCiudad, long idEsp)
+        {
+            var resultAux = operacionesdb.OpeConsultaAvanzada(idCiudad, idEsp);
+            List<EOutClinica> result = new List<EOutClinica>();
+
+            foreach (Clinica cli in resultAux)
+            {
+                foreach (Calendario cal in cli.Calendario)
+                {
+                    cal.IdClienteNavigation = null;
+                    cal.IdClinicaNavigation = null;
+                    cal.IdDoctorNavigation = null;
+                }
+                //cli.ClinicaDoctor = null;
+                result.Add(_mapper.Map<EOutClinica>(cli));
+            }
 
             return result;
         }

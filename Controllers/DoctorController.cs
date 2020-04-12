@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CalendarMngt.Entidades;
+using CalendarMngt.Entidades.EClinicaDoctor;
 using CalendarMngt.Entidades.EDoctor;
 using CalendarMngt.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -32,14 +33,17 @@ namespace CalendarMngt.Controllers
             return Ok(new EInDoctor());
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("ConsultarDoctor")]
-        public ERespuestaDoctor Consultar()
+        public ERespuestaClinicaDoctor Consultar()
         {
-            ERespuestaDoctor result = new ERespuestaDoctor();
-            result.Doctores = repositorioDoctor.Consultar();
+            ERespuestaClinicaDoctor result = new ERespuestaClinicaDoctor()
+            {
+                Doctores = repositorioDoctor.Consultar()
+            };
 
-            return ValidarRespuesta(result);
+            return ValidarRespuestaClinicaDoctor(result);
         }
 
         [HttpPost]
@@ -62,22 +66,51 @@ namespace CalendarMngt.Controllers
             return ValidarRespuesta(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("Clinica/{cli}")]
-        public ERespuestaDoctor ConsultarPorClinica(long cli)
+        public ERespuestaClinicaDoctor ConsultarPorClinica(long cli)
         {
-            ERespuestaDoctor result = new ERespuestaDoctor()
+            ERespuestaClinicaDoctor result = new ERespuestaClinicaDoctor()
             {
-                Doctores = repositorioDoctor.ConsultarPorClinica(cli),
+                Doctores = repositorioDoctor.ConsultarPorClinica(cli)
             };
 
-            return ValidarRespuesta(result);
+            return ValidarRespuestaClinicaDoctor(result);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("PorCiudadEsp")]
+        public ERespuestaClinicaDoctor ConsultaAvanzada(EBodyConsultarPorCiudadEsp entrada)
+        {
+            ERespuestaClinicaDoctor result = new ERespuestaClinicaDoctor()
+            {
+                Doctores = repositorioDoctor.ConsultaAvanzada(entrada.IdCiudad, entrada.IdEspecialidad)
+            };
+
+            return ValidarRespuestaClinicaDoctor(result);
         }
 
         private ERespuestaDoctor ValidarRespuesta(ERespuestaDoctor result)
         {
             if (result.Doctores.Count == 0)
             {
+                result.Error.Codigo = "01";
+                result.Error.Mensaje = "No se encontraron datos en la base";
+            }
+            else
+            {
                 result.Error.Codigo = "00";
+                result.Error.Mensaje = "Ok";
+            }
+
+            return result;
+        }
+
+        private ERespuestaClinicaDoctor ValidarRespuestaClinicaDoctor(ERespuestaClinicaDoctor result)
+        {
+            if (result.Doctores.Count == 0)
+            {
+                result.Error.Codigo = "01";
                 result.Error.Mensaje = "No se encontraron datos en la base";
             }
             else

@@ -30,7 +30,8 @@ namespace CalendarMngt.Controllers
 
             if(eOutLogin == null)
             {
-                return BadRequest(new { message = "Usuario y/o contraseña incorrectos" });
+                var badResult = BadRequest(new { message = "Usuario y/o contraseña incorrectos" });
+                return badResult;
             }
 
             return Ok(eOutLogin);

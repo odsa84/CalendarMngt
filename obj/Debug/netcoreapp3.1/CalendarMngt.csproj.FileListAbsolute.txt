@@ -127,4 +127,7 @@ D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp3.1\staticweba
 D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp3.1\staticwebassets\CalendarMngt.StaticWebAssets.xml
 D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
 D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 D:\WORKSPACE\dotNet\CalendarMngt\CalendarMngt\obj\Debug\netcoreapp3.1\CalendarMngt.MvcApplicationPartsAssemblyInfo.cache

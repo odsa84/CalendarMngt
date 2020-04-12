@@ -62,7 +62,7 @@ namespace CalendarMngt.Controllers
         {
             if (result.Titulos.Count == 0)
             {
-                result.Error.Codigo = "00";
+                result.Error.Codigo = "01";
                 result.Error.Mensaje = "No se encontraron datos en la base";
             }
             else
