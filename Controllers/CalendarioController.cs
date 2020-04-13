@@ -66,6 +66,7 @@ namespace CalendarMngt.Controllers
             return ValidarRespuesta(result);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("CitasAgendadas")]
         public ERespuestaCalendario ConsultarAgendadas()
@@ -104,6 +105,17 @@ namespace CalendarMngt.Controllers
         {
             ERespuestaCalendario result = new ERespuestaCalendario();
             result.Calendarios = repositorioCalendario.ConsultarPorClinica(entrada.Id);
+
+            return ValidarRespuesta(result);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("PorClinicaAgendadas")]
+        public ERespuestaCalendario ConsultarPorClinicaAgendadas(EBodyConsultarPor entrada)
+        {
+            ERespuestaCalendario result = new ERespuestaCalendario();
+            result.Calendarios = repositorioCalendario.ConsultarPorClinicaAgendadas(entrada.Id);
 
             return ValidarRespuesta(result);
         }
