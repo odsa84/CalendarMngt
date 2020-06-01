@@ -35,19 +35,19 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
 
         internal List<Especialidad> OpeConsultar()
         {
-            List<Especialidad> lst;
             using (var tit = new cita_doctorContext())
             {
-                var aux = (from especialidad in tit.Especialidad select especialidad);
-                lst = aux.ToList();
+                var lstEsp = (from especialidad in tit.Especialidad
+                           .Where(x => (x.Estado == true))
+                           select especialidad).ToList();
 
-                if (lst.Count == 0)
+                if (lstEsp.Count == 0)
                 {
                     return new List<Especialidad>();
                 }
-            }
 
-            return lst;
+                return lstEsp;
+            }            
         }
 
         internal Especialidad OpeConsultarPorId(long id)

@@ -12,7 +12,7 @@ namespace CalendarMngt.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowAll")]
-    //[Authorize]    
+    [Authorize]    
     public class CalendarioController : ControllerBase
     {
 
@@ -104,6 +104,17 @@ namespace CalendarMngt.Controllers
         {
             ERespuestaCalendario result = new ERespuestaCalendario();
             result.Calendarios = repositorioCalendario.ConsultarPorClinica(entrada.Id);
+
+            return ValidarRespuesta(result);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("PorClinicaAgendadas")]
+        public ERespuestaCalendario ConsultarPorClinicaAgendada(EBodyConsultarPor entrada)
+        {
+            ERespuestaCalendario result = new ERespuestaCalendario();
+            result.Calendarios = repositorioCalendario.ConsultarPorClinicaAgendada(entrada.Id);
 
             return ValidarRespuesta(result);
         }

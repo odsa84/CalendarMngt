@@ -65,6 +65,19 @@ namespace CalendarMngt.Repositorio
             return result;
         }
 
+        public List<EOutClinica> ConsultarPorDoctor(long idDoctor)
+        {
+            var resultAux = operacionesdb.OpeConsultarPorDoctor(idDoctor);
+            List<EOutClinica> result = new List<EOutClinica>();
+
+            foreach (Clinica cli in resultAux)
+            {
+                result.Add(_mapper.Map<EOutClinica>(cli));
+            }
+
+            return result;
+        }
+
         public EOutClinica ConsultarPorId(long id)
         {
             var resultAux = operacionesdb.OpeConsultarPorId(id);
@@ -83,13 +96,40 @@ namespace CalendarMngt.Repositorio
 
             foreach (Clinica cli in resultAux)
             {
-                foreach (Calendario cal in cli.Calendario)
+                /*foreach (Calendario cal in cli.Calendario)
                 {
                     cal.IdClienteNavigation = null;
                     cal.IdClinicaNavigation = null;
                     cal.IdDoctorNavigation = null;
-                }
+                }*/
                 //cli.ClinicaDoctor = null;
+                //cli.IdCiudadNavigation.IdProvinciaNavigation = null;
+                result.Add(_mapper.Map<EOutClinica>(cli));
+            }
+
+            return result;
+        }
+
+        public List<EOutClinica> ConsultaAvanzadaPorCiudad(long idCiudad)
+        {
+            var resultAux = operacionesdb.OpeConsultaAvanzadaPorCiudad(idCiudad);
+            List<EOutClinica> result = new List<EOutClinica>();
+
+            foreach (Clinica cli in resultAux)
+            {
+                result.Add(_mapper.Map<EOutClinica>(cli));
+            }
+
+            return result;
+        }
+
+        public List<EOutClinica> ConsultaAvanzadaPorEspecialidad(long idEsp)
+        {
+            var resultAux = operacionesdb.OpeConsultaAvanzadaPorEspecialidad(idEsp);
+            List<EOutClinica> result = new List<EOutClinica>();
+
+            foreach (Clinica cli in resultAux)
+            {
                 result.Add(_mapper.Map<EOutClinica>(cli));
             }
 

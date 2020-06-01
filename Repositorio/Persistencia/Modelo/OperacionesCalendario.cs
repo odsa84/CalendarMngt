@@ -27,6 +27,7 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                 try
                 {
                     cal.SaveChanges();
+                    eRespuesta.Calendarios.Add(_mapper.Map<EOutCalendario>(calendario));
                     eRespuesta.Error.Codigo = "00";
                     eRespuesta.Error.Mensaje = "Ok";
                 }
@@ -52,6 +53,8 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                                 .Where(c => (c.Id == calendario.Id))
                                  select cl).FirstOrDefault();
 
+                theCalendar.IdDoctor = calendario.IdDoctor;
+                theCalendar.IdEstado = calendario.IdEstado;
                 theCalendar.Sintomas = calendario.Sintomas;
                 theCalendar.Diagnostico = calendario.Diagnostico;
                 theCalendar.Indicaciones = calendario.Indicaciones;
@@ -184,6 +187,31 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
 
                 return calendarioLst;
             }            
+        }
+
+        internal List<Calendario> OpeConsultarPorClinicaAgendada(long idClinica)
+        {
+            using (var calendario = new cita_doctorContext())
+            {
+                var hoy = DateTime.Now;
+                var calendarioLst = (from cal in calendario.Calendario
+                                     .Include(cli => cli.IdClienteNavigation)
+                                     .Include(cli => cli.IdClinicaNavigation)
+                                     .Include(cli => cli.IdDoctorNavigation)
+                                     .Include(cli => cli.IdEstadoNavigation)
+                                     .Where(cal => (cal.IdClinica == idClinica)
+                                     && (cal.IdEstado == 1) 
+                                     && (cal.FinFechaHora >= hoy))
+                                     select cal).ToList();
+
+
+                if (calendarioLst.Count() == 0)
+                {
+                    return new List<Calendario>();
+                }
+
+                return calendarioLst;
+            }
         }
 
         internal List<Calendario> OpeConsultarPorDoctor(long idDoctor)

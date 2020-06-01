@@ -121,10 +121,19 @@ namespace CalendarMngt.Repositorio
 
             foreach (Calendario cal in resultAux)
             {
-                cal.IdClinicaNavigation.Calendario = null;
-                cal.IdClienteNavigation.Calendario = null;
-                cal.IdDoctorNavigation.Calendario = null;
-                cal.IdEstadoNavigation.Calendario = null;
+                result.Add(_mapper.Map<EOutCalendario>(cal));
+            }
+
+            return result;
+        }
+
+        public List<EOutCalendario> ConsultarPorClinicaAgendada(long idClinica)
+        {
+            var resultAux = operacionesdb.OpeConsultarPorClinicaAgendada(idClinica);
+            List<EOutCalendario> result = new List<EOutCalendario>();
+
+            foreach (Calendario cal in resultAux)
+            {
                 result.Add(_mapper.Map<EOutCalendario>(cal));
             }
 

@@ -13,6 +13,7 @@ namespace CalendarMngt.Entidades.EDoctor
         public string Apellidos { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string InfoGeneral { get; set; }
         public bool Estado { get; set; }
 

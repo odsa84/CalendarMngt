@@ -5,6 +5,7 @@ using CalendarMngt.Entidades.EDoctor;
 using CalendarMngt.Interfaces;
 using CalendarMngt.Repositorio.Persistencia;
 using CalendarMngt.Repositorio.Persistencia.Modelo;
+using CalendarMngt.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,13 @@ namespace CalendarMngt.Repositorio
 
         public RepositorioDoctor(IMapper _mapper)
         {
-            this.operacionesdb = new OperacionesDoctor();
+            this.operacionesdb = new OperacionesDoctor(_mapper);
             this._mapper = _mapper;
         }
 
         public ERespuestaDoctor Insertar(EInDoctor inDoctor)
         {
+            inDoctor.Password = Hash.Crear(inDoctor.Password, "jor290714luc300617");
             Doctor doc = _mapper.Map<Doctor>(inDoctor);
             ERespuestaDoctor eRespuesta = operacionesdb.OpeInsertar(doc);
 

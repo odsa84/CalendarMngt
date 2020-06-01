@@ -18,8 +18,14 @@ namespace CalendarMngt.Interfaces
 
         List<EOutClinica> ConsultarPorUsuario(string idUsuario);
 
+        List<EOutClinica> ConsultarPorDoctor(long idDoctor);
+
         EOutClinica ConsultarPorId(long id);
 
-        List<EOutClinica> ConsultaAvanzada(long idCiudad, long idEsp);        
+        List<EOutClinica> ConsultaAvanzada(long idCiudad, long idEsp);
+
+        List<EOutClinica> ConsultaAvanzadaPorCiudad(long idCiudad);
+
+        List<EOutClinica> ConsultaAvanzadaPorEspecialidad(long idEsp);
     }
 }

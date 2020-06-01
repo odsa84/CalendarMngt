@@ -1,9 +1,15 @@
-﻿using CalendarMngt.Entidades;
+﻿using AutoMapper;
+using CalendarMngt.Entidades;
+using CalendarMngt.Entidades.EAuth;
 using CalendarMngt.Interfaces;
 using CalendarMngt.Repositorio.Persistencia;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Net;
+using System.Net.Mail;
 
 namespace CalendarMngt.Controllers
 {
@@ -24,9 +30,9 @@ namespace CalendarMngt.Controllers
 
         [HttpPost]
         [Route("login")]
-        public IActionResult Login(ELogin model)
+        public IActionResult Login(ELogin eLogin)
         {
-            EOutLogin eOutLogin = iRepositorioAuth.Login(model);
+            EOutLogin eOutLogin = iRepositorioAuth.Login(eLogin);
 
             if(eOutLogin == null)
             {
@@ -35,6 +41,31 @@ namespace CalendarMngt.Controllers
             }
 
             return Ok(eOutLogin);
+        }
+
+        [HttpPost]
+        [Route("loginDoctor")]
+        public IActionResult LoginDoctor(ELogin eLogin)
+        {
+            EOutDoctorLogin eOutLogin = iRepositorioAuth.LoginDoctor(eLogin);
+
+            if (eOutLogin == null)
+            {
+                var badResult = BadRequest(new { message = "Usuario y/o contraseña incorrectos" });
+                return badResult;
+            }
+
+            return Ok(eOutLogin);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("sendEmail")]
+        public EError SendEmail(EInSendEmail entrada)
+        {
+            EError error = iRepositorioAuth.SendEmail(entrada.ToEmail, entrada.BodyEmail);
+
+            return error;
         }
 
        /* [HttpPost("login")]

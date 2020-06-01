@@ -13,6 +13,12 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
 {
     internal class OperacionesDoctor
     {
+        private readonly IMapper _mapper;
+
+        public OperacionesDoctor(IMapper _mapper)
+        {
+            this._mapper = _mapper;
+        }
 
         internal ERespuestaDoctor OpeInsertar(Doctor doctor)
         {
@@ -23,6 +29,7 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                 try
                 {
                     doc.SaveChanges();
+                    eRespuesta.Doctores.Add(_mapper.Map<EOutDoctor>(doctor));
                     eRespuesta.Error.Codigo = "00";
                     eRespuesta.Error.Mensaje = "Ok";
                 }

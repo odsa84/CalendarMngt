@@ -74,6 +74,15 @@ namespace CalendarMngt.Controllers
             return ValidarRespuesta(result);
         }
 
+        [HttpGet("doctor/{doc}")]
+        public ERespuesta ConsultarPorDoctor(long doc)
+        {
+            ERespuesta result = new ERespuesta();
+            result.Clinicas = repositorioClinica.ConsultarPorDoctor(doc);
+
+            return ValidarRespuesta(result);
+        }
+
         [HttpPost]
         [Route("ClinicaPorId")]
         public ERespuesta ConsultarPorId(EBodyConsultarPor entrada)
@@ -93,6 +102,28 @@ namespace CalendarMngt.Controllers
         {
             ERespuesta result = new ERespuesta();
             result.Clinicas = repositorioClinica.ConsultaAvanzada(entrada.IdCiudad, entrada.IdEspecialidad);
+
+            return ValidarRespuesta(result);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("PorCiudad")]
+        public ERespuesta ConsultaAvanzadaPorCiudad(EBodyConsultarPorCiudadEsp entrada)
+        {
+            ERespuesta result = new ERespuesta();
+            result.Clinicas = repositorioClinica.ConsultaAvanzadaPorCiudad(entrada.IdCiudad);
+
+            return ValidarRespuesta(result);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("PorEspecialidad")]
+        public ERespuesta ConsultaAvanzadaPorEspecialidad(EBodyConsultarPorCiudadEsp entrada)
+        {
+            ERespuesta result = new ERespuesta();
+            result.Clinicas = repositorioClinica.ConsultaAvanzadaPorEspecialidad(entrada.IdEspecialidad);
 
             return ValidarRespuesta(result);
         }

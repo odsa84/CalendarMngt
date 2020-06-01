@@ -125,6 +125,26 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             }            
         }
 
+        internal List<Clinica> OpeConsultarPorDoctor(long idDoctor)
+        {
+            using (var clinica = new cita_doctorContext())
+            {
+                var clinicaLst = (from clinic in clinica.ClinicaDoctor
+                                  .Include(cli => cli.IdClinicaNavigation)
+                                  .Include(doc => doc.IdDoctorNavigation)
+                                  .Where(cli => (cli.IdDoctor == idDoctor) && 
+                                  (cli.IdClinicaNavigation.Estado == true))
+                                  select clinic.IdClinicaNavigation).ToList();
+
+                if (clinicaLst.Count() == 0)
+                {
+                    return new List<Clinica>();
+                }
+
+                return clinicaLst;
+            }
+        }
+
         internal Clinica OpeConsultarPorId(long id)
         {
             using (var clinica = new cita_doctorContext())
@@ -147,23 +167,18 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             using (var clinica = new cita_doctorContext())
             {
                 var clinicaLst = (from cli in clinica.Clinica
-                                  .Include(x => x.IdCiudadNavigation)
-                                  .Include(x => x.ClinicaDoctor) //Poner en null IdClinicaNavigation
-                                  .ThenInclude(x => x.IdDoctorNavigation) //Poner en null ClinicaDoctor
-                                  .ThenInclude(x => x.DoctorEspecialidad) //Poner en null IdDoctorNavigation
-                                  .ThenInclude(x => x.IdEspecialidadNavigation) //Poner en null DoctorEspecialidad
-                                  .Include(x => x.Calendario)
-                                  .ThenInclude(x => x.IdEstadoNavigation)
+                                  /*.Include(x => x.IdCiudadNavigation)
+                                  .Include(x => x.ClinicaDoctor)
+                                  .ThenInclude(x => x.IdDoctorNavigation)
+                                  .ThenInclude(x => x.DoctorEspecialidad)
+                                  .ThenInclude(x => x.IdEspecialidadNavigation)
+                                  .Include(x => x.Calendario)*/
                                   .Where(x => (x.IdCiudadNavigation.Id == idCiudad)
                                     && (x.IdCiudadNavigation.Estado == true)
                                     && (x.ClinicaDoctor.Any(s => s.IdDoctorNavigation.DoctorEspecialidad
-                                                                    .Any(de => de.Id == idEsp))
+                                                                    .Any(de => de.IdEspecialidad == idEsp))
                                     && (x.Estado == true)))
-                                  select cli).ToList();                
-
-                /*var clinicList = clinica.Clinica
-                            .Where(x => x.ClinicaDoctor.Any(s => s.IdDoctorNavigation.DoctorEspecialidad
-                            .Any(de => de.Id == idEsp)) && (cli.IdCiudadNavigation.Id == idCiudad));*/
+                                  select cli).ToList();
 
                 if (clinicaLst.Count() == 0)
                 {
@@ -172,6 +187,44 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
 
                 return clinicaLst;
             }
-        }        
+        }
+
+        internal List<Clinica> OpeConsultaAvanzadaPorCiudad(long idCiudad)
+        {
+            using (var clinica = new cita_doctorContext())
+            {
+                var clinicaLst = (from cli in clinica.Clinica
+                                  .Where(x => (x.IdCiudadNavigation.Id == idCiudad)
+                                    && (x.IdCiudadNavigation.Estado == true)
+                                    && (x.Estado == true))
+                                  select cli).ToList();
+
+                if (clinicaLst.Count() == 0)
+                {
+                    return new List<Clinica>();
+                }
+
+                return clinicaLst;
+            }
+        }
+
+        internal List<Clinica> OpeConsultaAvanzadaPorEspecialidad(long idEsp)
+        {
+            using (var clinica = new cita_doctorContext())
+            {
+                var clinicaLst = (from cli in clinica.Clinica
+                                  .Where(x => (x.ClinicaDoctor.Any(s => s.IdDoctorNavigation.DoctorEspecialidad
+                                                                    .Any(de => de.IdEspecialidad == idEsp))
+                                    && (x.Estado == true)))
+                                  select cli).ToList();
+
+                if (clinicaLst.Count() == 0)
+                {
+                    return new List<Clinica>();
+                }
+
+                return clinicaLst;
+            }
+        }
     }
 }
