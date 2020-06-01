@@ -66,6 +66,7 @@ namespace CalendarMngt.Controllers
             return ValidarRespuesta(result);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("CitasAgendadas")]
         public ERespuestaCalendario ConsultarAgendadas()

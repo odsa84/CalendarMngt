@@ -58,6 +58,8 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                 theCalendar.Sintomas = calendario.Sintomas;
                 theCalendar.Diagnostico = calendario.Diagnostico;
                 theCalendar.Indicaciones = calendario.Indicaciones;
+                theCalendar.IdDoctor = calendario.IdDoctor;
+                theCalendar.IdEstado = calendario.IdEstado;
 
                 try
                 {
@@ -128,10 +130,6 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             {
                 var hoy = DateTime.Now;
                 var calendarioLst = (from cal in calendario.Calendario
-                                     .Include(cli => cli.IdClienteNavigation)
-                                     .Include(cli => cli.IdClinicaNavigation)
-                                     .Include(cli => cli.IdDoctorNavigation)
-                                     .Include(cli => cli.IdEstadoNavigation)
                                      .Where(cal => (cal.IdEstado == 1) && (cal.FinFechaHora >= hoy))
                                      select cal);
 
