@@ -44,7 +44,8 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
 #pragma warning disable CS1030 // Directiva #warning
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 //optionsBuilder.UseMySql("Server=localhost;port=3306;Database=cita_doctor;user id=root;");
-                optionsBuilder.UseMySql("mysql://zxn9mus9bw9f4diq:r5gy2qtpjxnng0zb@pqxt96p7ysz6rn1f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/pmtlsr6rotqho5bl");            
+                //optionsBuilder.UseMySql("mysql://zxn9mus9bw9f4diq:r5gy2qtpjxnng0zb@pqxt96p7ysz6rn1f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/pmtlsr6rotqho5bl");
+                optionsBuilder.UseMySql("Server=pqxt96p7ysz6rn1f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;port=3306;Database=pmtlsr6rotqho5bl;user id=zxn9mus9bw9f4diq;Password=r5gy2qtpjxnng0zb");
 #pragma warning restore CS1030 // Directiva #warning
             }
         }
