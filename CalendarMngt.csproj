@@ -6,29 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="\Repositorio\Persistencia\Aspnetroleclaims.cs" Link="Repositorio\Persistencia\Aspnetroleclaims.cs" />
-    <Compile Include="\Repositorio\Persistencia\Aspnetroles.cs" Link="Repositorio\Persistencia\Aspnetroles.cs" />
-    <Compile Include="\Repositorio\Persistencia\Aspnetuserclaims.cs" Link="Repositorio\Persistencia\Aspnetuserclaims.cs" />
-    <Compile Include="\Repositorio\Persistencia\Aspnetuserlogins.cs" Link="Repositorio\Persistencia\Aspnetuserlogins.cs" />
-    <Compile Include="\Repositorio\Persistencia\Aspnetuserroles.cs" Link="Repositorio\Persistencia\Aspnetuserroles.cs" />
-    <Compile Include="\Repositorio\Persistencia\Aspnetusers.cs" Link="Repositorio\Persistencia\Aspnetusers.cs" />
-    <Compile Include="\Repositorio\Persistencia\Aspnetusertokens.cs" Link="Repositorio\Persistencia\Aspnetusertokens.cs" />
-    <Compile Include="\Repositorio\Persistencia\Calendario.cs" Link="Repositorio\Persistencia\Calendario.cs" />
-    <Compile Include="\Repositorio\Persistencia\cita_doctorContext.cs" Link="Repositorio\Persistencia\Modelo\cita_doctorContext.cs" />
-    <Compile Include="\Repositorio\Persistencia\Cliente.cs" Link="Repositorio\Persistencia\Cliente.cs" />
-    <Compile Include="\Repositorio\Persistencia\Clinica.cs" Link="Repositorio\Persistencia\Clinica.cs" />
-    <Compile Include="\Repositorio\Persistencia\ClinicaDoctor.cs" Link="Repositorio\Persistencia\ClinicaDoctor.cs" />
-    <Compile Include="\Repositorio\Persistencia\Doctor.cs" Link="Repositorio\Persistencia\Doctor.cs" />
-    <Compile Include="\Repositorio\Persistencia\DoctorEspecialidad.cs" Link="Repositorio\Persistencia\DoctorEspecialidad.cs" />
-    <Compile Include="\Repositorio\Persistencia\DoctorTitulo.cs" Link="Repositorio\Persistencia\DoctorTitulo.cs" />
-    <Compile Include="\Repositorio\Persistencia\Efmigrationshistory.cs" Link="Repositorio\Persistencia\Efmigrationshistory.cs" />
-    <Compile Include="\Repositorio\Persistencia\Especialidad.cs" Link="Repositorio\Persistencia\Especialidad.cs" />
-    <Compile Include="\Repositorio\Persistencia\Estado.cs" Link="Repositorio\Persistencia\Estado.cs" />
-    <Compile Include="\Repositorio\Persistencia\Titulo.cs" Link="Repositorio\Persistencia\Titulo.cs" />
-    <Compile Include="\Repositorio\Persistencia\UltimaHora.cs" Link="Repositorio\Persistencia\UltimaHora.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.1" />
