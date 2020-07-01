@@ -32,6 +32,9 @@ namespace CalendarMngt
 
             services.AddDbContext<cita_doctorContext>(options =>
             options.UseMySql("Server=localhost;port=3306;Database=cita_doctor;user id=root;"));
+            //options.UseMySql("Server=sq65ur5a5bj7flas.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;port=3306;Database=v16m117wkauqwy98;Uid=t3otnyhohimkqij7;Pwd=obuxw7wepy9a24em;SslMode=None;ConnectionTimeout=0"));
+            //options.UseMySql("Server=db4free.net;port=3306;Database=cita_doctor;user id=odsa_84;password=123456789"));
+            //options.UseMySql("Server=198.71.227.93;port=3306;Database=cita_doctor;user id=odsa_84;password=osvaldo2020*;SslMode=None;ConnectionTimeout=0"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<cita_doctorContext>();
@@ -46,6 +49,7 @@ namespace CalendarMngt
             services.AddTransient<IRepositorioEstado, RepositorioEstado>();
             services.AddTransient<IRepositorioProvincia, RepositorioProvincia>();
             services.AddTransient<IRepositorioCiudad, RepositorioCiudad>();
+            services.AddTransient<IRepositorioHorasLaborales, RepositorioHorasLaborales>();
 
             services.AddAutoMapper(typeof(Startup));
 

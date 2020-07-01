@@ -7,6 +7,7 @@ using CalendarMngt.Entidades.EClinicaDoctor;
 using CalendarMngt.Entidades.EDoctor;
 using CalendarMngt.Entidades.EEspecialidad;
 using CalendarMngt.Entidades.EEstado;
+using CalendarMngt.Entidades.EHorasLaborales;
 using CalendarMngt.Entidades.EProvincia;
 using CalendarMngt.Entidades.ETitulo;
 using CalendarMngt.Repositorio.Persistencia;
@@ -50,6 +51,9 @@ namespace CalendarMngt.Configuracion
             CreateMap<Ciudad, EOutCiudad>().ReverseMap();
 
             CreateMap<ClinicaDoctor, EOutClinicaDoctor>().ReverseMap();
+
+            CreateMap<EInHoras, HorasLaborales>().ReverseMap();
+            CreateMap<HorasLaborales, EOutHoras>().ReverseMap();
         }
     }
 }

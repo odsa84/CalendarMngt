@@ -9,6 +9,7 @@ namespace CalendarMngt.Repositorio.Persistencia
         {
             ClinicaDoctor = new HashSet<ClinicaDoctor>();
             Calendario = new HashSet<Calendario>();
+            HorasLaborales = new HashSet<HorasLaborales>();
         }
 
         public long Id { get; set; }
@@ -29,5 +30,6 @@ namespace CalendarMngt.Repositorio.Persistencia
         public virtual Provincia IdProvinciaNavigation { get; set; }
         public virtual ICollection<ClinicaDoctor> ClinicaDoctor { get; set; }
         public virtual ICollection<Calendario> Calendario { get; set; }
+        public virtual ICollection<HorasLaborales> HorasLaborales { get; set; }
     }
 }

@@ -36,9 +36,21 @@ namespace CalendarMngt.Repositorio
         {
             var resultAux = operacionesdb.OpeConsultar();
             List<EOutClinicaDoctor> result = new List<EOutClinicaDoctor>();
-            foreach(ClinicaDoctor doc in resultAux)
+            foreach (ClinicaDoctor doc in resultAux)
             {
-                doc.IdClinicaNavigation.ClinicaDoctor = null;
+                doc.IdDoctorNavigation.ClinicaDoctor = null;
+                foreach (DoctorTitulo dt in doc.IdDoctorNavigation.DoctorTitulo)
+                {
+                    dt.IdDoctorNavigation = null;
+                    dt.IdTituloNavigation.DoctorTitulo = null;
+                }
+
+                foreach (DoctorEspecialidad de in doc.IdDoctorNavigation.DoctorEspecialidad)
+                {
+                    de.IdDoctorNavigation = null;
+                    de.IdEspecialidadNavigation.DoctorEspecialidad = null;
+                }
+
                 result.Add(_mapper.Map<EOutClinicaDoctor>(doc));
             }
 

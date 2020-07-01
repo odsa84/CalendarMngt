@@ -17,6 +17,8 @@ namespace CalendarMngt.Entidades.ECliente
 
         public string Email { get; set; }
 
+        public string Password { get; set; }
+
         public string Telefono { get; set; }
 
         public bool Estado { get; set; }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CalendarMngt.Entidades;
 using CalendarMngt.Entidades.EAuth;
+using CalendarMngt.Entidades.ECliente;
 using CalendarMngt.Entidades.EDoctor;
 using CalendarMngt.Interfaces;
 using CalendarMngt.Repositorio.Persistencia.Modelo;
@@ -104,6 +105,112 @@ namespace CalendarMngt.Repositorio
                 };
 
                 return eOutDoctorLogin;
+            }
+        }
+
+        public EOutClienteLogin LoginCliente(ELogin eLogin)
+        {
+            EOutClienteLogin eOutClienteLogin = null;
+            using (var context = new cita_doctorContext())
+            {
+                string pass = Hash.Crear(eLogin.Password, "jor290714luc300617");
+
+                var cliente = (from cli in context.Cliente
+                    .Where(c => (c.Email.Equals(eLogin.Username) && c.Password.Equals(pass)))
+                              select cli);
+
+                if (cliente.ToList().Count == 0)
+                {
+                    return eOutClienteLogin;
+                }
+
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySp$cialPassw0rd"));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                var token = new JwtSecurityToken(
+                    issuer: "http://localhost:4200",
+                    audience: "http://localhost:4200",
+                    claims: new List<Claim>(),
+                    expires: DateTime.Now.AddMinutes(1440),
+                    signingCredentials: signinCredentials
+                );
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                eOutClienteLogin = new EOutClienteLogin()
+                {
+                    Token = tokenString,
+                    ExpiresIn = token.ValidTo,
+                    Cliente = _mapper.Map<EOutCliente>(cliente.ToList()[0]),
+                    Tipo = "client"
+                };
+
+                return eOutClienteLogin;
+            }
+        }
+
+        public ERespuestaCliente ChangePassword(ELogin eLogin)
+        {
+            ERespuestaCliente eRespuesta = new ERespuestaCliente();
+            using (var context = new cita_doctorContext())
+            {
+                string pass = Hash.Crear(eLogin.Password, "jor290714luc300617");
+
+                var cliente = (from cli in context.Cliente
+                    .Where(c => (c.Email.Equals(eLogin.Username)))
+                        select cli).FirstOrDefault();
+
+                cliente.Password = pass;
+
+                try
+                {
+                    context.SaveChanges();
+                    eRespuesta.Error.Codigo = "00";
+                    eRespuesta.Error.Mensaje = "Ok";
+                }
+                catch (Exception e)
+                {
+                    eRespuesta.Error.Codigo = "01";
+                    eRespuesta.Error.Mensaje = e.Message;                    
+                }
+
+                return eRespuesta;
+            }
+        }
+
+        public ERespuestaCliente ChangePasswordPaciente(EChangePassword eChange)
+        {
+            ERespuestaCliente eRespuesta = new ERespuestaCliente();
+            using (var context = new cita_doctorContext())
+            {
+                string oldPass = Hash.Crear(eChange.OldPassword, "jor290714luc300617");
+                string newPass = Hash.Crear(eChange.NewPassword, "jor290714luc300617");
+
+                var cliente = (from cli in context.Cliente
+                    .Where(c => (c.Email.Equals(eChange.Email) && c.Password.Equals(oldPass)))
+                               select cli).FirstOrDefault();
+
+                if(cliente != null)
+                {
+                    cliente.Password = newPass;
+
+                    try
+                    {
+                        context.SaveChanges();
+                        eRespuesta.Error.Codigo = "00";
+                        eRespuesta.Error.Mensaje = "Ok";
+                    }
+                    catch (Exception e)
+                    {
+                        eRespuesta.Error.Codigo = "01";
+                        eRespuesta.Error.Mensaje = e.Message;
+                    }
+                } else {
+                    eRespuesta.Error.Codigo = "02";
+                    eRespuesta.Error.Mensaje = "No se encontro el paciente con el usuario y contraseña proporcionados.";
+                }                                
+
+                return eRespuesta;
             }
         }
 

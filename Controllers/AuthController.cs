@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CalendarMngt.Entidades;
 using CalendarMngt.Entidades.EAuth;
+using CalendarMngt.Entidades.ECliente;
 using CalendarMngt.Interfaces;
 using CalendarMngt.Repositorio.Persistencia;
 using Microsoft.AspNetCore.Authorization;
@@ -58,6 +59,41 @@ namespace CalendarMngt.Controllers
             return Ok(eOutLogin);
         }
 
+        [HttpPost]
+        [Route("loginCliente")]
+        public IActionResult LoginCliente(ELogin eLogin)
+        {
+            EOutClienteLogin eOutLogin = iRepositorioAuth.LoginCliente(eLogin);
+
+            if (eOutLogin == null)
+            {
+                var badResult = BadRequest(new { message = "Usuario y/o contraseña incorrectos" });
+                return badResult;
+            }
+
+            return Ok(eOutLogin);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("changePasswordSistema")]
+        public ERespuestaCliente ChangePasswordSistema(ELogin eLogin)
+        {
+            ERespuestaCliente result = iRepositorioAuth.ChangePassword(eLogin);
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("changePasswordPaciente")]
+        public ERespuestaCliente ChangePasswordPaciente(EChangePassword eChange)
+        {
+            ERespuestaCliente result = iRepositorioAuth.ChangePasswordPaciente(eChange);
+
+            return result;
+        }
+
         [AllowAnonymous]
         [HttpPost]
         [Route("sendEmail")]
@@ -68,40 +104,56 @@ namespace CalendarMngt.Controllers
             return error;
         }
 
-       /* [HttpPost("login")]
-        public async Task<ActionResult> Login(ELogin model)
+        private ERespuestaClienteLogin ValidarRespuesta(ERespuestaClienteLogin result)
         {
-            var user = await this._userManager.FindByNameAsync(model.Username);
-
-            if (user == null)
+            if (result.Cliente == null)
             {
-                return BadRequest(new { message = "Username or password is incorrect!" });
+                result.Error.Codigo = "01";
+                result.Error.Mensaje = "No se encontraron datos en la base";
+            }
+            else
+            {
+                result.Error.Codigo = "00";
+                result.Error.Mensaje = "Ok";
             }
 
-            if (await this._userManager.CheckPasswordAsync(user, model.Password))
-            {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySp$cialPassw0rd"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            return result;
+        }
 
-                var token = new JwtSecurityToken(
-                    issuer: "http://localhost:4200",
-                    audience: "http://localhost:4200",
-                    claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                );
+        /* [HttpPost("login")]
+         public async Task<ActionResult> Login(ELogin model)
+         {
+             var user = await this._userManager.FindByNameAsync(model.Username);
 
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+             if (user == null)
+             {
+                 return BadRequest(new { message = "Username or password is incorrect!" });
+             }
 
-                return Ok(new
-                {
-                    Token = tokenString,
-                    ExpiresIn = token.ValidTo,
-                    Username = user.UserName
-                });
-            }
+             if (await this._userManager.CheckPasswordAsync(user, model.Password))
+             {
+                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySp$cialPassw0rd"));
+                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-            return Unauthorized();
-        }*/
+                 var token = new JwtSecurityToken(
+                     issuer: "http://localhost:4200",
+                     audience: "http://localhost:4200",
+                     claims: new List<Claim>(),
+                     expires: DateTime.Now.AddMinutes(5),
+                     signingCredentials: signinCredentials
+                 );
+
+                 var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                 return Ok(new
+                 {
+                     Token = tokenString,
+                     ExpiresIn = token.ValidTo,
+                     Username = user.UserName
+                 });
+             }
+
+             return Unauthorized();
+         }*/
     }
 }

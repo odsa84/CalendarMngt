@@ -95,5 +95,22 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                 return clienteLst.ToList()[0];
             }
         }
+
+        internal Cliente OpeConsultarPorEmail(string email)
+        {
+            using (var cliente = new cita_doctorContext())
+            {
+                var clienteLst = (from cli in cliente.Cliente
+                                  .Where(cli => (cli.Email.Equals(email)) && (cli.Estado == true))
+                                  select cli);
+
+                if (clienteLst.ToList().Count() == 0)
+                {
+                    return null;
+                }
+
+                return clienteLst.ToList()[0];
+            }
+        }
     }
 }

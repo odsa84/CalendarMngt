@@ -3,6 +3,7 @@ using CalendarMngt.Entidades.ECliente;
 using CalendarMngt.Interfaces;
 using CalendarMngt.Repositorio.Persistencia;
 using CalendarMngt.Repositorio.Persistencia.Modelo;
+using CalendarMngt.Utils;
 using System.Collections.Generic;
 
 namespace CalendarMngt.Repositorio
@@ -20,8 +21,17 @@ namespace CalendarMngt.Repositorio
 
         public ERespuestaCliente Inertar(EInCliente inCliente)
         {
-            Cliente cli = _mapper.Map<Cliente>(inCliente);
-            ERespuestaCliente respuesta = operacionesdb.OpeInsertar(cli);
+            ERespuestaCliente respuesta = new ERespuestaCliente();
+            if (operacionesdb.OpeConsultarPorEmail(inCliente.Email) == null)
+            {
+                inCliente.Password = Hash.Crear(inCliente.Password, "jor290714luc300617");
+                Cliente cli = _mapper.Map<Cliente>(inCliente);
+                respuesta = operacionesdb.OpeInsertar(cli);
+            }else
+            {
+                respuesta.Error.Codigo = "02";
+                respuesta.Error.Mensaje = "Email ya registrado en el sistema";
+            }
 
             return respuesta;
         }

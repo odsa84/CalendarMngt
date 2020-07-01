@@ -33,31 +33,13 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
         public virtual DbSet<Efmigrationshistory> Efmigrationshistory { get; set; }
         public virtual DbSet<Especialidad> Especialidad { get; set; }
         public virtual DbSet<Estado> Estado { get; set; }
+        public virtual DbSet<HorasLaborales> HorasLaborales { get; set; }
         public virtual DbSet<Provincia> Provincia { get; set; }
         public virtual DbSet<Titulo> Titulo { get; set; }
-        public virtual DbSet<UltimaHora> UltimaHora { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#pragma warning disable CS1030 // Directiva #warning
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseMySql("Server=localhost;port=3306;Database=cita_doctor;user id=root;");
-                //optionsBuilder.UseMySql("mysql://zxn9mus9bw9f4diq:r5gy2qtpjxnng0zb@pqxt96p7ysz6rn1f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/pmtlsr6rotqho5bl");
-                optionsBuilder.UseMySql("Server=pqxt96p7ysz6rn1f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;port=3306;Database=pmtlsr6rotqho5bl;user id=zxn9mus9bw9f4diq;password=r5gy2qtpjxnng0zb");
-#pragma warning restore CS1030 // Directiva #warning
-            }
-        }
+        public virtual DbSet<UltimaHora> UltimaHora { get; set; }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            /*
-             *Para eliminar este error que salio: The entity type 'IdentityUserLogin<string>' 
-             * requires a primary key to be defined
-             * */
-            base.OnModelCreating(modelBuilder);
-
+        {           
             modelBuilder.Entity<Aspnetroleclaims>(entity =>
             {
                 entity.ToTable("aspnetroleclaims");
@@ -355,6 +337,10 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
                     .HasColumnType("varchar(150)");
+
+                entity.Property(e => e.Password)
+                    .HasColumnName("password")
+                    .HasColumnType("longtext");
 
                 entity.Property(e => e.Nombres)
                     .IsRequired()
@@ -659,6 +645,53 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                     .HasColumnType("varchar(50)");
             });
 
+            modelBuilder.Entity<HorasLaborales>(entity =>
+            {
+                entity.ToTable("horas_laborales");
+
+                entity.HasIndex(e => e.IdClinica)
+                   .HasName("clinica_calendario_fk");
+
+                entity.HasIndex(e => e.IdDoctor)
+                    .HasName("doctor_calendario_fk");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.HoraInicio)
+                    .HasColumnName("horaInicio")
+                    .HasColumnType("varchar(5)");
+
+                entity.Property(e => e.HoraFin)
+                    .HasColumnName("horaFin")
+                    .HasColumnType("varchar(5)");
+
+                entity.Property(e => e.Fecha)
+                    .HasColumnName("fecha")
+                    .HasColumnType("varchar(10)");
+
+                entity.Property(e => e.IdClinica)
+                    .HasColumnName("idClinica")
+                    .HasColumnType("bigint(20)");
+
+                entity.Property(e => e.IdDoctor)
+                    .HasColumnName("idDoctor")
+                    .HasColumnType("bigint(20)");                
+
+                entity.HasOne(d => d.IdClinicaNavigation)
+                    .WithMany(p => p.HorasLaborales)
+                    .HasForeignKey(d => d.IdClinica)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_clinica_horas_laborales");
+
+                entity.HasOne(d => d.IdDoctorNavigation)
+                    .WithMany(p => p.HorasLaborales)
+                    .HasForeignKey(d => d.IdDoctor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_doctor_horas_laborales");
+            });
+
             modelBuilder.Entity<Provincia>(entity =>
             {
                 entity.ToTable("provincia");
@@ -724,6 +757,26 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                     .HasColumnName("horaInicio")
                     .HasColumnType("datetime");
             });
+
+            /*
+             *Para eliminar este error que salio: The entity type 'IdentityUserLogin<string>' 
+             * requires a primary key to be defined
+             * */
+            base.OnModelCreating(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#pragma warning disable CS1030 // Directiva #warning
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySql("Server=localhost;port=3306;Database=cita_doctor;user id=root;");
+                //optionsBuilder.UseMySql("Server=sq65ur5a5bj7flas.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;port=3306;Database=v16m117wkauqwy98;Uid=t3otnyhohimkqij7;Pwd=obuxw7wepy9a24em;SslMode=None;ConnectionTimeout=0");
+                //optionsBuilder.UseMySql("Server=db4free.net;port=3306;Database=cita_doctor;user id=odsa_84;password=123456789");
+                //optionsBuilder.UseMySql("Server=198.71.227.93;port=3306;Database=cita_doctor;user id=odsa_84;password=osvaldo2020*;SslMode=None;ConnectionTimeout=0");
+#pragma warning restore CS1030 // Directiva #warning
+            }
         }
     }
 }
