@@ -100,5 +100,37 @@ namespace CalendarMngt.Repositorio
 
             return result;
         }
+
+        public List<EOutClinicaDoctor> ConsultaPorClinicaEspecialidad(long idClinica, long idEsp)
+        {
+            var resultAux = new List<ClinicaDoctor>();
+            if (idEsp == 0)
+            {
+                resultAux = operacionesdb.OpeConsultarPorClinica(idClinica);
+            }
+            else if (idClinica != 0 && idEsp != 0)
+            {
+                resultAux = operacionesdb.OpeConsultaPorClinicaEspecialidad(idClinica, idEsp);
+            }
+
+            List<EOutClinicaDoctor> result = new List<EOutClinicaDoctor>();
+            foreach (ClinicaDoctor doc in resultAux)
+            {
+                foreach (Calendario cal in doc.IdClinicaNavigation.Calendario)
+                {
+                    cal.IdClienteNavigation = null;
+                    cal.IdClinicaNavigation = null;
+                    cal.IdDoctorNavigation = null;
+                    cal.IdEstadoNavigation.Calendario = null;
+                }
+                doc.IdClinicaNavigation.ClinicaDoctor = null;
+                doc.IdDoctorNavigation.Calendario = null;
+                doc.IdDoctorNavigation.ClinicaDoctor = null;
+                doc.IdDoctorNavigation.DoctorTitulo = null;
+                result.Add(_mapper.Map<EOutClinicaDoctor>(doc));
+            }
+
+            return result;
+        }
     }
 }
