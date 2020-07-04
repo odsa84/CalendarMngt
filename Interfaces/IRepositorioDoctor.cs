@@ -21,7 +21,7 @@ namespace CalendarMngt.Interfaces
 
         List<EOutClinicaDoctor> ConsultaAvanzada(long idCiudad, long idEsp);
 
-        List<EOutClinicaDoctor> ConsultaPorClinicaEspecialidad(long idClinica, long idEsp);
+        List<EOutClinicaDoctor> ConsultaPorCiudadClinicaEspecialidad(long idCiudad, long idClinica, long idEsp);
 
     }
 }

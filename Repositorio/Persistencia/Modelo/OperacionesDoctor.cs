@@ -185,5 +185,35 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                 return clinicaLst;
             }
         }
+
+        internal List<ClinicaDoctor> OpeConsultaPorCiudadClinicaEspecialidad(long idCiudad, long idClinica, long idEsp)
+        {
+            using (var clinica = new cita_doctorContext())
+            {
+                var clinicaLst = (from cli in clinica.ClinicaDoctor
+                                      .Include(x => x.IdClinicaNavigation)
+                                      .ThenInclude(x => x.IdCiudadNavigation)
+                                      .Include(x => x.IdClinicaNavigation)
+                                      .ThenInclude(x => x.Calendario)
+                                      .ThenInclude(x => x.IdEstadoNavigation)
+                                      .Include(x => x.IdDoctorNavigation)
+                                      .ThenInclude(x => x.DoctorEspecialidad) //Poner en null IdDoctorNavigation
+                                      .ThenInclude(x => x.IdEspecialidadNavigation) //Poner en null DoctorEspecialidad
+                                      .Where(x => (x.IdClinicaNavigation.IdCiudadNavigation.Id == idCiudad)
+                                        && (x.IdClinicaNavigation.Id == idClinica)
+                                        && (x.IdClinicaNavigation.Estado == true)
+                                        && (x.IdDoctorNavigation.DoctorEspecialidad
+                                                                        .Any(de => de.IdEspecialidad == idEsp))
+                                        && (x.IdDoctorNavigation.Estado == true))
+                                  select cli).ToList();
+
+                if (clinicaLst.Count() == 0)
+                {
+                    return new List<ClinicaDoctor>();
+                }
+
+                return clinicaLst;
+            }
+        }
     }
 }

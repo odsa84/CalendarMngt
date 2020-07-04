@@ -101,12 +101,16 @@ namespace CalendarMngt.Repositorio
             return result;
         }
 
-        public List<EOutClinicaDoctor> ConsultaPorClinicaEspecialidad(long idClinica, long idEsp)
+        public List<EOutClinicaDoctor> ConsultaPorCiudadClinicaEspecialidad(long idCiudad, long idClinica, long idEsp)
         {
             var resultAux = new List<ClinicaDoctor>();
-            if (idEsp == 0)
+            if (idEsp == 0 && idCiudad == 0)
             {
                 resultAux = operacionesdb.OpeConsultarPorClinica(idClinica);
+            }                        
+            else if (idCiudad != 0 && idClinica != 0 && idEsp != 0)
+            {
+                resultAux = operacionesdb.OpeConsultaPorCiudadClinicaEspecialidad(idCiudad, idClinica, idEsp);
             }
             else if (idClinica != 0 && idEsp != 0)
             {

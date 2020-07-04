@@ -91,12 +91,12 @@ namespace CalendarMngt.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("PorClinicaEsp")]
-        public ERespuestaClinicaDoctor ConsultaPorClinicaEspecialidad(EBodyConsultarPorClinicaEsp entrada)
+        [HttpPost("PorCiudadClinicaEsp")]
+        public ERespuestaClinicaDoctor ConsultaPorCiudadClinicaEspecialidad(EBodyConsultarPorClinicaEsp entrada)
         {
             ERespuestaClinicaDoctor result = new ERespuestaClinicaDoctor()
             {
-                Doctores = repositorioDoctor.ConsultaPorClinicaEspecialidad(entrada.IdClinica, entrada.IdEspecialidad)
+                Doctores = repositorioDoctor.ConsultaPorCiudadClinicaEspecialidad(entrada.IdCiudad, entrada.IdClinica, entrada.IdEspecialidad)
             };
 
             return ValidarRespuestaClinicaDoctor(result);
