@@ -60,12 +60,13 @@ namespace CalendarMngt.Controllers
         }
 
         [HttpPost]
-        [Route("ConsultarPorDoctorFecha")]
-        public ERespuestaHorasLaborales ConsultarPorDoctorFecha(EHorasLaboralesDoctorFecha entrada)
+        [Route("ConsultarPorDoctorClinicaFecha")]
+        public ERespuestaHorasLaborales ConsultarPorDoctorClinicaFecha(EHorasLaboralesDoctorClinicaFecha entrada)
         {
             ERespuestaHorasLaborales result = new ERespuestaHorasLaborales()
             {
-                HorasLaborales = respositorioHorasLaborales.ConsultarPorDoctorFecha(entrada.IdDoctor, entrada.Fecha)
+                HorasLaborales = respositorioHorasLaborales.ConsultarPorDoctorClinicaFecha(entrada.IdDoctor,
+                entrada.IdClinica, entrada.Fecha)
             };
 
             return ValidarRespuesta(result);

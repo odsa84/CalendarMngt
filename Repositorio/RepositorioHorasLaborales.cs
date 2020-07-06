@@ -81,9 +81,9 @@ namespace CalendarMngt.Repositorio
             return result;
         }
 
-        public List<EOutHoras> ConsultarPorDoctorFecha(long idDoctor, string fecha)
+        public List<EOutHoras> ConsultarPorDoctorClinicaFecha(long idDoctor, long idClinica, string fecha)
         {
-            var resultAux = operacionesdb.OpeConsultarPorDoctorFecha(idDoctor, fecha);
+            var resultAux = operacionesdb.OpeConsultarPorDoctorClinicaFecha(idDoctor, idClinica, fecha);
             List<EOutHoras> result = new List<EOutHoras>();
 
             foreach (HorasLaborales hl in resultAux)

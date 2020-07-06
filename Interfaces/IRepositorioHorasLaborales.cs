@@ -14,6 +14,6 @@ namespace CalendarMngt.Interfaces
 
         List<EOutHoras> ConsultarPorDoctorClinica(long idDoctor, long idClinica);
 
-        List<EOutHoras> ConsultarPorDoctorFecha(long idDoctor, string fecha);
+        List<EOutHoras> ConsultarPorDoctorClinicaFecha(long idDoctor, long idClinica, string fecha);
     }
 }

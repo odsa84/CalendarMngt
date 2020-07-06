@@ -72,12 +72,13 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             }
         }
 
-        public List<HorasLaborales> OpeConsultarPorDoctorFecha(long idDoctor, string fecha)
+        public List<HorasLaborales> OpeConsultarPorDoctorClinicaFecha(long idDoctor, long idClinica, string fecha)
         {
             using (var hl = new cita_doctorContext())
             {
                 var hlList = (from cd in hl.HorasLaborales
-                                 .Where(c => (c.IdDoctorNavigation.Id == idDoctor)
+                                 .Where(c => (c.IdDoctor == idDoctor)
+                                 && (c.IdClinica == idClinica)
                                  && (c.Fecha.Equals(fecha)))
                               select cd).ToList();
 

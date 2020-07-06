@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace CalendarMngt.Entidades.EHorasLaborales
 {
-    public class EHorasLaboralesDoctorFecha
+    public class EHorasLaboralesDoctorClinicaFecha
     {
         public long IdDoctor { get; set; }
+
+        public long IdClinica { get; set; }
 
         public string Fecha { get; set; }
     }
