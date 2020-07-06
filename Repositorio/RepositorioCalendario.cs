@@ -153,6 +153,19 @@ namespace CalendarMngt.Repositorio
             return result;
         }
 
+        public List<EOutCalendario> ConsultarPorDoctorAgendada(long idDoctor)
+        {
+            var resultAux = operacionesdb.OpeConsultarPorDoctorAgendada(idDoctor);
+            List<EOutCalendario> result = new List<EOutCalendario>();
+
+            foreach (Calendario cal in resultAux)
+            {
+                result.Add(_mapper.Map<EOutCalendario>(cal));
+            }
+
+            return result;
+        }
+
         public List<EOutCalendario> ConsultarPorEstado(long idEstado)
         {
             var resultAux = operacionesdb.OpeConsultarPorEstado(idEstado);

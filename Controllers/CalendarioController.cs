@@ -131,6 +131,16 @@ namespace CalendarMngt.Controllers
         }
 
         [HttpPost]
+        [Route("PorDoctorAgendadas")]
+        public ERespuestaCalendario ConsultarPorDoctorAgendada(EBodyConsultarPor entrada)
+        {
+            ERespuestaCalendario result = new ERespuestaCalendario();
+            result.Calendarios = repositorioCalendario.ConsultarPorDoctorAgendada(entrada.Id);
+
+            return ValidarRespuesta(result);
+        }
+
+        [HttpPost]
         [Route("PorCliente")]
         public ERespuestaCalendario ConsultarPorCliente(EBodyConsultarPor entrada)
         {

@@ -23,6 +23,8 @@ namespace CalendarMngt.Interfaces
 
         List<EOutCalendario> ConsultarPorDoctor(long idDoctor);
 
+        List<EOutCalendario> ConsultarPorDoctorAgendada(long idDoctor);
+
         List<EOutCalendario> ConsultarPorClinica(long idClinica);
 
         List<EOutCalendario> ConsultarPorClinicaAgendada(long idClinica);

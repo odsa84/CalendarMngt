@@ -234,6 +234,31 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             }            
         }
 
+        internal List<Calendario> OpeConsultarPorDoctorAgendada(long idDoctor)
+        {
+            using (var calendario = new cita_doctorContext())
+            {
+                var hoy = DateTime.Now;
+                var calendarioLst = (from cal in calendario.Calendario
+                                     .Include(cli => cli.IdClienteNavigation)
+                                     .Include(cli => cli.IdClinicaNavigation)
+                                     .Include(cli => cli.IdDoctorNavigation)
+                                     .Include(cli => cli.IdEstadoNavigation)
+                                     .Where(cal => (cal.IdDoctor == idDoctor)
+                                     && (cal.IdEstado == 1)
+                                     && (cal.FinFechaHora >= hoy))
+                                     select cal).ToList();
+
+
+                if (calendarioLst.Count() == 0)
+                {
+                    return new List<Calendario>();
+                }
+
+                return calendarioLst;
+            }
+        }
+
         internal List<Calendario> OpeConsultarPorCliente(long idCliente)
         {
             using (var calendario = new cita_doctorContext())

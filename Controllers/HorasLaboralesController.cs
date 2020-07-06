@@ -59,6 +59,18 @@ namespace CalendarMngt.Controllers
             return ValidarRespuesta(result);
         }
 
+        [HttpPost]
+        [Route("ConsultarPorDoctorFecha")]
+        public ERespuestaHorasLaborales ConsultarPorDoctorFecha(EHorasLaboralesDoctorFecha entrada)
+        {
+            ERespuestaHorasLaborales result = new ERespuestaHorasLaborales()
+            {
+                HorasLaborales = respositorioHorasLaborales.ConsultarPorDoctorFecha(entrada.IdDoctor, entrada.Fecha)
+            };
+
+            return ValidarRespuesta(result);
+        }
+
         private ERespuestaHorasLaborales ValidarRespuesta(ERespuestaHorasLaborales result)
         {
             if (result.HorasLaborales.Count == 0)

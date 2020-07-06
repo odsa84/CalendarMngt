@@ -72,6 +72,24 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             }
         }
 
+        public List<HorasLaborales> OpeConsultarPorDoctorFecha(long idDoctor, string fecha)
+        {
+            using (var hl = new cita_doctorContext())
+            {
+                var hlList = (from cd in hl.HorasLaborales
+                                 .Where(c => (c.IdDoctorNavigation.Id == idDoctor)
+                                 && (c.Fecha.Equals(fecha)))
+                              select cd).ToList();
+
+                if (hlList.Count() == 0)
+                {
+                    return new List<HorasLaborales>();
+                }
+
+                return hlList;
+            }
+        }
+
         public void OpeDelete(List<HorasLaborales> toDelete)
         {
             using (var hl = new cita_doctorContext())

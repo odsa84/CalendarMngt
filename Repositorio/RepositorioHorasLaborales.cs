@@ -80,5 +80,18 @@ namespace CalendarMngt.Repositorio
 
             return result;
         }
+
+        public List<EOutHoras> ConsultarPorDoctorFecha(long idDoctor, string fecha)
+        {
+            var resultAux = operacionesdb.OpeConsultarPorDoctorFecha(idDoctor, fecha);
+            List<EOutHoras> result = new List<EOutHoras>();
+
+            foreach (HorasLaborales hl in resultAux)
+            {
+                result.Add(_mapper.Map<EOutHoras>(hl));
+            }
+
+            return result;
+        }
     }
 }
