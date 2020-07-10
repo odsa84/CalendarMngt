@@ -13,5 +13,6 @@ namespace CalendarMngt.Entidades.EHorasLaborales
         public string Fecha { get; set; }
         public long IdDoctor { get; set; }
         public long IdClinica { get; set; }
+        public bool Disponible { get; set; }
     }
 }

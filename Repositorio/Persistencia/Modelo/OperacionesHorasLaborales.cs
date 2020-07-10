@@ -37,6 +37,38 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
             }
         }
 
+        public ERespuestaHorasLaborales OpeActualizarDisponibilidad(HorasLaborales horasLaborales)
+        {
+            ERespuestaHorasLaborales eRespuesta = new ERespuestaHorasLaborales();
+            using (var hl = new cita_doctorContext())
+            {
+                var hLab = (from cd in hl.HorasLaborales
+                                 .Where(c => (c.Id == horasLaborales.Id))
+                              select cd).FirstOrDefault();
+
+                hLab.Disponible = horasLaborales.Disponible;
+
+                try
+                {
+                    hl.SaveChanges();
+                    eRespuesta.HorasLaborales.Add(_mapper.Map<EOutHoras>(horasLaborales));
+                    eRespuesta.Error.Codigo = "00";
+                    eRespuesta.Error.Mensaje = "Ok";
+                }
+                catch (Exception e)
+                {
+                    eRespuesta.Error.Codigo = "01";
+                    eRespuesta.Error.Mensaje = e.Message;
+
+                    return eRespuesta;
+                }
+            }
+
+            //eRespuesta.Calendarios.Add(_mapper.Map<EOutCalendario>(calendario));
+
+            return eRespuesta;
+        }
+
         public List<HorasLaborales> OpeConsultarPorDoctor(long idDoctor)
         {
             using (var hl = new cita_doctorContext())
@@ -88,6 +120,18 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
                 }
 
                 return hlList;
+            }
+        }
+
+        public HorasLaborales OpeConsultarPorId(string id)
+        {
+            using (var hl = new cita_doctorContext())
+            {
+                var hlab = (from cd in hl.HorasLaborales
+                                 .Where(c => (c.Id.Equals(id)))
+                              select cd).FirstOrDefault();
+
+                return hlab;
             }
         }
 

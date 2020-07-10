@@ -677,7 +677,11 @@ namespace CalendarMngt.Repositorio.Persistencia.Modelo
 
                 entity.Property(e => e.IdDoctor)
                     .HasColumnName("idDoctor")
-                    .HasColumnType("bigint(20)");                
+                    .HasColumnType("bigint(20)");
+
+                entity.Property(e => e.Disponible)
+                    .HasColumnName("disponible")
+                    .HasColumnType("bit(1)");
 
                 entity.HasOne(d => d.IdClinicaNavigation)
                     .WithMany(p => p.HorasLaborales)

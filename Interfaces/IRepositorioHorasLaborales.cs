@@ -10,6 +10,10 @@ namespace CalendarMngt.Interfaces
     {
         void Insertar(EHorasLaborales eHorasLaborales);
 
+        ERespuestaHorasLaborales ConsultarActualizarDisponibilidad(EInHoras inHoras);
+
+        ERespuestaHorasLaborales ActualizarDisponibilidad(EInHoras inHoras);
+
         List<EOutHoras> ConsultarPorDoctor(long idDoctor);
 
         List<EOutHoras> ConsultarPorDoctorClinica(long idDoctor, long idClinica);

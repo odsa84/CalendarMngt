@@ -13,6 +13,7 @@ namespace CalendarMngt.Repositorio.Persistencia
         public string Fecha { get; set; }
         public long IdDoctor { get; set; }
         public long IdClinica { get; set; }
+        public bool Disponible { get; set; }
 
         public virtual Doctor IdDoctorNavigation { get; set; }
         public virtual Clinica IdClinicaNavigation { get; set; }

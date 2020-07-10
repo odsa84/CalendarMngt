@@ -36,6 +36,24 @@ namespace CalendarMngt.Controllers
         }
 
         [HttpPost]
+        [Route("ConsultarActualizarDisponibilidad")]
+        public ERespuestaHorasLaborales ConsultarActualizarDisponibilidad(EInHoras entrada)
+        {
+            ERespuestaHorasLaborales respuesta = respositorioHorasLaborales.ConsultarActualizarDisponibilidad(entrada);
+
+            return respuesta;
+        }
+
+        [HttpPost]
+        [Route("ActualizarDisponibilidad")]
+        public ERespuestaHorasLaborales ActualizarDisponibilidad(EInHoras entrada)
+        {
+            ERespuestaHorasLaborales respuesta = respositorioHorasLaborales.ActualizarDisponibilidad(entrada);
+
+            return respuesta;
+        }
+
+        [HttpPost]
         [Route("ConsultarPorDoctor")]
         public ERespuestaHorasLaborales ConsultarPorDoctor(EBodyConsultarPor entrada)
         {

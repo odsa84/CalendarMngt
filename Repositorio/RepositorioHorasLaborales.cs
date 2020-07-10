@@ -55,6 +55,40 @@ namespace CalendarMngt.Repositorio
             });
         }
 
+        public ERespuestaHorasLaborales ActualizarDisponibilidad(EInHoras inHoras)
+        {
+            HorasLaborales hl = _mapper.Map<HorasLaborales>(inHoras);
+            ERespuestaHorasLaborales respuesta = operacionesdb.OpeActualizarDisponibilidad(hl);
+
+            return respuesta;
+        }
+
+        public ERespuestaHorasLaborales ConsultarActualizarDisponibilidad(EInHoras inHoras)
+        {
+            ERespuestaHorasLaborales respuesta = new ERespuestaHorasLaborales();
+
+            HorasLaborales laborales = operacionesdb.OpeConsultarPorId(inHoras.Id);
+            if(laborales != null)
+            {
+                if (laborales.Disponible == true)
+                {
+                    HorasLaborales hl = _mapper.Map<HorasLaborales>(inHoras);
+                    respuesta = operacionesdb.OpeActualizarDisponibilidad(hl);
+                } else
+                {
+                    //respuesta.HorasLaborales.Add(_mapper.Map<EOutHoras>(laborales));
+                    respuesta.Error.Codigo = "01";
+                    respuesta.Error.Mensaje = "No Disponible";
+                }
+            } else
+            {
+                respuesta.Error.Codigo = "02";
+                respuesta.Error.Mensaje = "No existe el horario seleccionado";
+            }           
+
+            return respuesta;
+        } 
+
         public List<EOutHoras> ConsultarPorDoctor(long idDoctor)
         {
             var resultAux = operacionesdb.OpeConsultarPorDoctor(idDoctor);
