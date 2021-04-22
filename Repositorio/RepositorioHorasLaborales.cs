@@ -46,7 +46,8 @@ namespace CalendarMngt.Repositorio
                     HoraFin = e.HoraFin,
                     Fecha = e.Fecha,
                     IdDoctor = eHorasLaborales.IdDoctor,
-                    IdClinica = eHorasLaborales.IdClinica
+                    IdClinica = eHorasLaborales.IdClinica,
+                    Disponible = true
                 };
 
                 HorasLaborales hl = _mapper.Map<HorasLaborales>(inHoras);
@@ -73,6 +74,7 @@ namespace CalendarMngt.Repositorio
                 if (laborales.Disponible == true)
                 {
                     HorasLaborales hl = _mapper.Map<HorasLaborales>(inHoras);
+                    hl.Disponible = false;
                     respuesta = operacionesdb.OpeActualizarDisponibilidad(hl);
                 } else
                 {
